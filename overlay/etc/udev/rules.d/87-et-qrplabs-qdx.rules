@@ -1,0 +1,27 @@
+# Author   : Jason Emerick
+# Date     : 20 FEB 2025
+# Updated  : 20 FEB 2025
+# Purpose  : udev rules for the QRP Labs QDX 
+#
+# Preconditions:
+# 1. QDX connected via USB cable
+#
+# Postconditions:
+# 1. /dev/et-cat created
+# 2. /dev/et-audio created
+# 3. rigctld started
+
+# Detect ET_DEVICE early and use for rules that follow
+KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{product}=="QDX*", \
+    ENV{ET_DEVICE}="QDX"
+
+# Create consistent device name/path for the CAT serial device
+ENV{ET_DEVICE}=="QDX", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="a34c", \
+    ACTION=="add", \
+    ENV{ET_SUBDEVICE}="CAT", GROUP="dialout", MODE="0660", SYMLINK+="et-cat", \
+    RUN+="/usr/bin/systemctl start rigctld"
+
+SUBSYSTEM=="sound", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="a34c", ATTRS{manufacturer}=="QRP Labs", ENV{ET_DEVICE}=="", \
+    ACTION=="add", \
+    ATTR{id}="ET_AUDIO", \
+    ENV{ET_DEVICE}="QDX", ENV{ET_SUBDEVICE}="AUDIO", GROUP="audio", MODE="0660", SYMLINK+="et-audio"
