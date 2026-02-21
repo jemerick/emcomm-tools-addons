@@ -9,7 +9,6 @@ set -e
 et-log "Installing QDX radio support"
 
 cp -v ../overlay/etc/udev/rules.d/87-et-qrplabs-qdx.rules /etc/udev/rules.d/
-udevadm control --reload
 
 cp -v overlay/opt/emcomm-tools/conf/radios.d/qrplabs-qdx.json $ET_HOME/conf/radios.d
 
