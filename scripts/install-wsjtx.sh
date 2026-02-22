@@ -23,6 +23,5 @@ cp -v ../overlay/opt/emcomm-tools/conf/template.d/WSJT-X.conf ${ET_HOME}/conf/te
 chmod -v 664 ${ET_HOME}/conf/template.d/WSJT-X.conf
 
 cp -v ../overlay/opt/emcomm-tools/bin/et-wsjtx ${ET_HOME}/bin/et-wsjtx
-chmod -v 664 ${ET_HOME}/bin/et-wsjtx
 
 cp -v ../overlay/usr/share/applications/wsjtx.desktop /usr/share/applications/
